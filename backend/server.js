@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const userRouter = require("./routes/userRoutes");
 const groupRouter = require("./routes/groupRoutes");
+const messageRouter = require("./routes/messageRoutes");
 const http = require("http");
 const socket = require("socket.io");
 const socketIo = require("./socket");
@@ -37,6 +38,7 @@ socketIo(io);
 //Routes
 app.use("/api/users", userRouter);
 app.use("/api/groups", groupRouter);
+app.use("/api/messages", messageRouter);
 
 server.listen(port, () => {
   console.log(`Server is running on ${port}`);
