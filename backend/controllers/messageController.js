@@ -23,7 +23,9 @@ const sendMessage = async (req, res) => {
 const getAllMessages = async (req, res) => {
   try {
     const { groupId } = req.params;
-    const messages = await Chat.find({ group: groupId });
+    const messages = await Chat.find({ group: groupId })
+      .populate("sender", "username email")
+      .sort({ createdAt: -1 });
     if (!messages) {
       return res.status(404).json({ message: "No messages found" });
     }
