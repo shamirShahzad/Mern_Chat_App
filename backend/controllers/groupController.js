@@ -6,8 +6,8 @@ const createGroup = async (req, res) => {
     const group = await Group.create({
       name,
       description,
-      //   admin: req.user._id,
-      //   members:[req.user._id]
+      admin: req.user._id,
+      members: [req.user._id],
     });
     const populatedGroup = await Group.findById(group._id)
       .populate("admin", "username email")
@@ -18,6 +18,18 @@ const createGroup = async (req, res) => {
   }
 };
 
-const groupController = { createGroup };
+const getGroups = async (req, res) => {
+  try {
+    const groups = await Group.find();
+    if (!groups) {
+      res.status(404).json({ message: "No groups found" });
+    }
+    res.json(groups);
+  } catch (error) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+const groupController = { createGroup, getGroups };
 
 module.exports = groupController;
