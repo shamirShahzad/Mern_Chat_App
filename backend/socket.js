@@ -35,7 +35,7 @@ const socketIo = (io) => {
     });
 
     //Sending a message
-    socket.on("new message", (groupId) => {
+    socket.on("new message", (message) => {
       socket.to(message.group).emit("message received", message);
     });
 
