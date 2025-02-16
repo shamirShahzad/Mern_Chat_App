@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const mongoose = require("mongoose");
 const io = socket(server, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: ["https://mern-chat-app-frontend-eight.vercel.app/"],
     methods: ["GET", "POST"],
     credentials: true,
   },
