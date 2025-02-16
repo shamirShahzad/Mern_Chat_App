@@ -4,13 +4,12 @@ const socketIo = require("../socket");
 const sendMessage = async (req, res) => {
   try {
     const { content, group } = req.body;
-    console.log(content, group);
     const message = await Chat.create({
       sender: req.user._id,
       content,
       group,
     });
-    const populatedMessage = Chat.findById(message._id).populate(
+    const populatedMessage = await Chat.findById(message._id).populate(
       "sender",
       "username email"
     );

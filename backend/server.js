@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const mongoose = require("mongoose");
 const io = socket(server, {
   cors: {
-    origin: ["http://localhost:5000"],
+    origin: ["http://localhost:5173"],
     methods: ["GET", "POST"],
     credentials: true,
   },

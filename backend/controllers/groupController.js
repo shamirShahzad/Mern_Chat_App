@@ -20,7 +20,7 @@ const createGroup = async (req, res) => {
 
 const getGroups = async (req, res) => {
   try {
-    const groups = await Group.find();
+    const groups = await Group.find().populate("members", "username email _id");
     if (!groups) {
       res.status(404).json({ message: "No groups found" });
     }

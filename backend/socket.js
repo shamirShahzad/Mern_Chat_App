@@ -2,7 +2,7 @@ const socketIo = (io) => {
   const connectedUsers = new Map();
   io.on("connection", (socket) => {
     //Get user for authentication
-    const user = (socket.handshake = auth.user);
+    const user = socket.handshake.auth.user;
     console.log("user Connected", user?.username);
     //Join Room/Group
     socket.on("Join Room", (groupId) => {
@@ -12,10 +12,9 @@ const socketIo = (io) => {
       connectedUsers.set(socket.id, { user, room: groupId });
       //Get list of all users in the room
       const usersInRoom = Array.from(connectedUsers.values())
-        .filter((user) => {
-          user.room === groupId;
-        })
-        .map((user) => user.user);
+        .filter((u) => u.room === groupId)
+        .map((u) => u.user);
+
       io.in(groupId).emit("users in room", usersInRoom);
       socket.to(groupId).emit("notification", {
         type: "USER_JOINED",
